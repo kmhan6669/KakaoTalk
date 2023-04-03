@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const API_URL = 'https://yungooso-nextjs.vercel.app/api/messages';
 
 function App() {
+  const [messages, setMessages] = useState([]);
+  const [friends, setFriends] = useState([]);
+  useEffect(() => { 
+    setInterval(() => {
+      axios.get(API_URL)
+        .then((res) => {
+          setMessages(res.data);
+          return res.data;
+        })
+        .then((resData) => { 
+        })
+    }, 1000);
+  }, [])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {messages.map((message) => { 
+        return (
+          <div key={message.id}>{message.username} : { message.text}</div>
+        )
+      })}
     </div>
   );
 }
