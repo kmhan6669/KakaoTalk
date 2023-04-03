@@ -1,8 +1,8 @@
 // 채팅방 리스트 보여주기
-import  YouTubePlayer  from "react-youtube";
+import YouTubePlayer from "react-youtube";
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=tZixREYOIZQ';
 const ID = 'tZixREYOIZQ';
-function Home() {
+function Karina() {
     const options = {
         width: "560",
         height: "315",
@@ -15,9 +15,9 @@ function Home() {
 
     return (
         <div>
-           homepage
+            <YouTubePlayer videoId={ID} opts={options} />
         </div>
     )
 }
 
-export default Home;
+export default Karina;

@@ -1,30 +1,108 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 
-const API_URL = 'https://yungooso-nextjs.vercel.app/api/messages';
+import Friends from './pages/friends';
+import Home from './pages/home';
+import Rooms from './pages/room';
+import Chats from './pages/chats';
+
+import './css/App.css'
+
+import { getMessages, postMessage } from './hooks/chatMessagesAPIs';
+
+
 
 function App() {
-  const [messages, setMessages] = useState([]);
-  const [friends, setFriends] = useState([]);
+  const [response, setResponse] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  //const [friends, setFriends] = useState([]);
+
+  let [btnActive, setBtnActive] = useState("");
+  //룸리스트 만들기
+  function creatRoomList() { 
+    const roomNames = response.map(res => res.roomname)
+    const filteredRoomNames = roomNames.filter((room, index) => {
+      return roomNames.indexOf(room) === index;
+    })
+    return filteredRoomNames;
+  }
+
+// 서버 연결 불가능시
   useEffect(() => { 
-    setInterval(() => {
-      axios.get(API_URL)
-        .then((res) => {
-          setMessages(res.data);
-          return res.data;
-        })
-        .then((resData) => { 
-        })
-    }, 1000);
+    setResponse([
+      {
+        id: 1,
+        username: 'han',
+        roomname: 'room1',
+        text: 'text1'
+      }, {
+        id: 2,
+        username: 'han',
+        roomname: 'room2',
+        text: 'text2'
+      }, {
+        id: 3,
+        username: 'karina',
+        roomname: 'room2',
+        text: 'text3'
+      }, {
+        id: 4,
+        username: 'karina',
+        roomname: 'room2',
+        text: 'text4'
+      }
+      
+  ])
+  
   }, [])
+//서버 연결 가능 시
+// useEffect(() => { 
+  //     setInterval(async () => {
+    //       await getMessages()
+    //         .then((resData) => { 
+      //           setResponse(resData)
+      
+      //         })
+      
+      //     }, 1000);
+      //   }, [])
+      
+      
+        useEffect(() => { 
+          setRooms(creatRoomList)
+        }, [response])
+  
+  const toggleActive = (e) => {
+    console.log(e)
+    setBtnActive((prev) => {
+      return e
+    });
+  };
+
   
   return (
     <div>
-      {messages.map((message) => { 
-        return (
-          <div key={message.id}>{message.username} : { message.text}</div>
-        )
-      })}
+      <BrowserRouter>
+        <ul className='nav'>
+          <li className={"btn" + ('home' === btnActive ? "active" : "")} value={'home'} onClick={()=>toggleActive('home')}><Link to="/">HOME</Link> </li>
+          <li className={"btn" + ('rooms' === btnActive ? "active" : "")} value={'rooms'} onClick={() => toggleActive('rooms')}><Link to="/rooms">Rooms</Link> </li>
+          <li className={"btn" + ('friends' === btnActive ? "active" : "")} value={'friends'} onClick={() => toggleActive('friends')}><Link to="/friends">Friends</Link></li>
+        </ul>
+        <Routes>
+          <Route path={`/`} element={<Home />} />
+          <Route path="rooms" element={<Rooms rooms={rooms} />} />
+          <Route path="friends" element={<Friends />} />
+          {rooms.map((room) => { 
+            return <Route key={room} path={`rooms/${room}`} element={<Chats room={room} response={response} />} />
+          })}
+          
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

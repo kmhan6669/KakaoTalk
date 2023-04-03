@@ -1,0 +1,37 @@
+.nav {
+    list-style-type: none;
+}
+.navList {
+    display : block;
+    color: #000;
+}
+
+a {
+        text-decoration: none;
+        color: #000;
+}
+
+a :hover {
+  color : red;
+  text-decoration: underline;
+}
+
+.btn {
+    width: 30%;
+    color: white;
+    background-color: rgb(95, 95, 95);
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+.btnactive {
+    width: 50%;
+    color: white;
+    background-color: rgb(255, 255, 255);
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
