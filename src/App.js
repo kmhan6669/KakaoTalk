@@ -10,6 +10,7 @@ import Friends from './pages/friends';
 import Home from './pages/home';
 import Rooms from './pages/room';
 import Chats from './pages/chats';
+import Karina from './pages/karina'
 
 import './css/App.css'
 
@@ -86,23 +87,28 @@ function App() {
 
   
   return (
-    <div>
+    <div className='App'>
+      <header className="App-header">
       <BrowserRouter>
         <ul className='nav'>
-          <li className={"btn" + ('home' === btnActive ? "active" : "")} value={'home'} onClick={()=>toggleActive('home')}><Link to="/">HOME</Link> </li>
-          <li className={"btn" + ('rooms' === btnActive ? "active" : "")} value={'rooms'} onClick={() => toggleActive('rooms')}><Link to="/rooms">Rooms</Link> </li>
-          <li className={"btn" + ('friends' === btnActive ? "active" : "")} value={'friends'} onClick={() => toggleActive('friends')}><Link to="/friends">Friends</Link></li>
+          <li className={"btn" + ('home' === btnActive ? "active" : "")} value={'home'} ><Link to="/" onClick={() => toggleActive('home')}>HOME</Link> </li>
+          <li className={"btn" + ('rooms' === btnActive ? "active" : "")} value={'rooms'} ><Link to="/rooms" onClick={() => toggleActive('rooms')}>Rooms</Link> </li>
+          <li className={"btn" + ('friends' === btnActive ? "active" : "")} value={'friends'}><Link to="/friends" onClick={() => toggleActive('friends')}>Friends</Link></li>
+          <li className={"btn" + ('Karina' === btnActive ? "active" : "")} value={'Karina'} ><Link to="/Karina" onClick={() => toggleActive('Karina')}>Karina</Link></li>
         </ul>
+
         <Routes>
           <Route path={`/`} element={<Home />} />
           <Route path="rooms" element={<Rooms rooms={rooms} />} />
           <Route path="friends" element={<Friends />} />
+          <Route path="karina" element={<Karina />} />
           {rooms.map((room) => { 
             return <Route key={room} path={`rooms/${room}`} element={<Chats room={room} response={response} />} />
           })}
           
         </Routes>
       </BrowserRouter>
+      </header>
     </div>
   );
 }

@@ -1,3 +1,12 @@
+.App {
+      text-align: center;
+}
+
+.App-header {
+    background-color: rgb(95, 95, 95);
+    background-size: cover;
+}
+
 .nav {
     list-style-type: none;
 }
