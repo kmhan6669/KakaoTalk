@@ -9,14 +9,16 @@ import {
 import Friends from './pages/friends';
 import Home from './pages/home';
 import Rooms from './pages/room';
-import Chats from './pages/chats';
+import Chats from './pages/Chats';
 import Karina from './pages/karina'
 
 import './css/App.css'
 
 import { getMessages, postMessage } from './hooks/chatMessagesAPIs';
 
+const routeStyle = {
 
+}
 
 function App() {
   const [response, setResponse] = useState([]);
@@ -88,25 +90,27 @@ function App() {
   
   return (
     <div className='App'>
-      <header className="App-header">
-      <BrowserRouter>
-        <ul className='nav'>
-          <li className={"btn" + ('home' === btnActive ? "active" : "")} value={'home'} ><Link to="/" onClick={() => toggleActive('home')}>HOME</Link> </li>
-          <li className={"btn" + ('rooms' === btnActive ? "active" : "")} value={'rooms'} ><Link to="/rooms" onClick={() => toggleActive('rooms')}>Rooms</Link> </li>
-          <li className={"btn" + ('friends' === btnActive ? "active" : "")} value={'friends'}><Link to="/friends" onClick={() => toggleActive('friends')}>Friends</Link></li>
-          <li className={"btn" + ('Karina' === btnActive ? "active" : "")} value={'Karina'} ><Link to="/Karina" onClick={() => toggleActive('Karina')}>Karina</Link></li>
-        </ul>
-
-        <Routes>
-          <Route path={`/`} element={<Home />} />
-          <Route path="rooms" element={<Rooms rooms={rooms} />} />
-          <Route path="friends" element={<Friends />} />
-          <Route path="karina" element={<Karina />} />
-          {rooms.map((room) => { 
-            return <Route key={room} path={`rooms/${room}`} element={<Chats room={room} response={response} />} />
-          })}
-          
-        </Routes>
+      <header>
+        <BrowserRouter>
+          <div className='contents'>
+            <ul className='nav'>
+              <li className={"btn" + ('home' === btnActive ? "active" : "")} value={'home'} ><Link to="/" onClick={() => toggleActive('home')}>HOME</Link> </li>
+              <li className={"btn" + ('rooms' === btnActive ? "active" : "")} value={'rooms'} ><Link to="/rooms" onClick={() => toggleActive('rooms')}>Rooms</Link> </li>
+              <li className={"btn" + ('friends' === btnActive ? "active" : "")} value={'friends'}><Link to="/friends" onClick={() => toggleActive('friends')}>Friends</Link></li>
+              <li className={"btn" + ('Karina' === btnActive ? "active" : "")} value={'Karina'} ><Link to="/Karina" onClick={() => toggleActive('Karina')}>Karina</Link></li>
+            </ul>
+            <div className='contentsinfo'>
+              <Routes>
+              <Route path={`/`} element={<Home />} />
+              <Route path="rooms" element={<Rooms rooms={rooms} />} />
+              <Route path="friends" element={<Friends />} />
+              <Route path="karina" element={<Karina />} />
+              {rooms.map((room) => { 
+                return <Route key={room} path={`rooms/${room}`} element={<Chats room={room} response={response} />} />
+              })}
+              </Routes>
+            </div>
+        </div>
       </BrowserRouter>
       </header>
     </div>

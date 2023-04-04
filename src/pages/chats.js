@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { postMessage } from '../hooks/chatMessagesAPIs'
 
 function Chats({ room, response }) {
+    console.log(response)
+    const [chats, setChats] = useState(chatList(room));
+    const [inputChat, setInputChat] = useState('')
     function chatList(roomName) {
         const chatList = response.filter((res) => res.roomname === roomName)
         const sortChatList = chatList.sort((a, b) => new Date(a.date) - new Date(b.date))
         return sortChatList
     }
-    const [chats, setChats] = useState(chatList(room));
-    const [inputChat, setInputChat] = useState('')
 
     useEffect(() => { 
         setChats(chatList(room))
